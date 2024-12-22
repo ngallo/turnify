@@ -56,12 +56,28 @@ func main() {
 	lastDay := time.Date(endYear, time.Month(endMonth), 31, 0, 0, 0, 0, time.UTC)
 
 	weekDays := turnify.BuildWeekDays(firstDay, lastDay, specialDays)
+	weekDaysMap := map[turnify.WorkType][]turnify.WorkShift{}
 	for _, weekDay := range weekDays {
-		fmt.Printf("%s,%s,%s,%s\n", weekDay.Date.Format("02/01/2006"), weekDay.Weekday, weekDay.WorkType, weekDay.Description)
+		if _, ok := weekDaysMap[weekDay.WorkType]; !ok {
+			weekDaysMap[weekDay.WorkType] = []turnify.WorkShift{}
+		}
+		weekDaysMap[weekDay.WorkType] = append(weekDaysMap[weekDay.WorkType], weekDay)
+		//fmt.Printf("%s,%s,%s,%s\n", weekDay.Date.Format("02/01/2006"), weekDay.Weekday, weekDay.WorkType, weekDay.Description)
 	}
 
 	workers := turnify.BuildDoctors()
-	for _, woorker := range workers {
-		fmt.Printf("%s\n", woorker.Name)
+
+	turnify.AllocateWorkers(workers, weekDaysMap[turnify.SuperSpecial])
+	turnify.AllocateWorkers(workers, weekDaysMap[turnify.Special])
+	turnify.AllocateWorkers(workers, weekDaysMap[turnify.SuperPreHoliday])
+	turnify.AllocateWorkers(workers, weekDaysMap[turnify.PreHoliday])
+	turnify.AllocateWorkers(workers, weekDaysMap[turnify.HolidayNight])
+	turnify.AllocateWorkers(workers, weekDaysMap[turnify.HolidayDay])
+	turnify.AllocateWorkers(workers, weekDaysMap[turnify.Regular])
+
+	for _, worker := range workers {
+		for _, workShift := range worker.WorkShifts {
+			fmt.Printf("%s,%s,%s,%s,%s\n", workShift.Date.Format("02/01/2006"), worker.Name, workShift.WorkType, workShift.Weekday, workShift.Description)
+		}
 	}
 }

@@ -114,10 +114,10 @@ func BuildWeekDays(firstDay time.Time, lastDay time.Time, specialDays []WorkShif
 }
 
 // BuildDoctors builds a slice of doctors.
-func BuildDoctors() []Worker {
-	workers := make([]Worker, 9)
+func BuildDoctors() []*Worker {
+	workers := make([]*Worker, 9)
 	for i := 0; i < 9; i++ {
-		workers[i] = Worker{
+		workers[i] = &Worker{
 			Name:       fmt.Sprintf("MD%d", i+1),
 			WorkShifts: []WorkShift{},
 		}
