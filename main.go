@@ -119,7 +119,11 @@ func main() {
 
 	for _, worker := range workers {
 		for _, workShift := range worker.WorkShifts {
-			fmt.Printf("%s,%s,%s,%s,%s\n", workShift.Date.Format("02/01/2006"), worker.Name, workShift.WorkType, workShift.Weekday, workShift.Description)
+			dayType := "giorno"
+			if workShift.NightShift {
+				dayType = "notte"
+			}
+			fmt.Printf("%s,%s,%s,%s,%s,%s\n", workShift.Date.Format("02/01/2006"), worker.Name, workShift.WorkType,dayType, workShift.Weekday, workShift.Description)
 		}
 	}
 }
