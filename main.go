@@ -67,13 +67,55 @@ func main() {
 
 	workers := turnify.BuildDoctors()
 
-	turnify.AllocateWorkers(workers, weekDaysMap[turnify.SuperSpecial])
-	turnify.AllocateWorkers(workers, weekDaysMap[turnify.Special])
-	turnify.AllocateWorkers(workers, weekDaysMap[turnify.SuperPreHoliday])
-	turnify.AllocateWorkers(workers, weekDaysMap[turnify.PreHoliday])
-	turnify.AllocateWorkers(workers, weekDaysMap[turnify.HolidayNight])
-	turnify.AllocateWorkers(workers, weekDaysMap[turnify.HolidayDay])
-	turnify.AllocateWorkers(workers, weekDaysMap[turnify.Regular])
+	err := turnify.AllocateWorkers(workers, weekDaysMap[turnify.SuperSpecial])
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	err = turnify.AllocateWorkers(workers, weekDaysMap[turnify.Special])
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	err = turnify.AllocateWorkers(workers, weekDaysMap[turnify.SuperPreHoliday])
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	err = turnify.AllocateWorkers(workers, weekDaysMap[turnify.PreHoliday])
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	err = turnify.AllocateWorkers(workers, weekDaysMap[turnify.HolidayNight])
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	err = turnify.AllocateWorkers(workers, weekDaysMap[turnify.HolidayDay])
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	err = turnify.AllocateWorkers(workers, weekDaysMap[turnify.Regular])
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// for _, worker := range workers {
+	// 	shiftMap := map[turnify.WorkType][]turnify.WorkShift{}
+	// 	for _, workShift := range worker.WorkShifts {
+	// 		if _, ok := shiftMap[workShift.WorkType]; !ok {
+	// 			shiftMap[workShift.WorkType] = []turnify.WorkShift{}
+	// 		}
+	// 		shiftMap[workShift.WorkType] = append(shiftMap[workShift.WorkType], workShift)
+	// 	}
+	// 	for workType, shifts := range shiftMap {
+	// 		fmt.Printf("%s: %s %d\n", worker.Name, workType, len(shifts))
+	// 	}
+	// }
+	
 
 	for _, worker := range workers {
 		for _, workShift := range worker.WorkShifts {

@@ -13,14 +13,16 @@ func GenerateRandomNumbers(x int) []int {
 	if x <= 0 {
 		return nil
 	}
+
 	numbers := make([]int, x)
-	for i := 1; i <= x; i++ {
-		numbers[i-1] = i
+	for i := 0; i < x; i++ {
+		numbers[i] = i
 	}
 	rand.Seed(time.Now().UnixNano())
 	rand.Shuffle(len(numbers), func(i, j int) {
 		numbers[i], numbers[j] = numbers[j], numbers[i]
 	})
+
 	return numbers
 }
 
