@@ -13,7 +13,7 @@ const (
 	HolidayDay      WorkType = "FESTIVO-MATTINA"
 	HolidayNight    WorkType = "FESTIVO-SERA"
 	Special         WorkType = "FESTA-SPECIALE"
-	SuperSpecial    WorkType = "SUPER-FESTA-SPECIALE"
+	SuperSpecial    WorkType = "FESTA-SPECIALE-SUPER"
 )
 
 // WorkShift represents a work shift.
@@ -23,5 +23,6 @@ type WorkShift struct {
 	WorkType         WorkType
 	NightShift       bool
 	DayBeforeHoliday bool
+	TeamSize		 int
 	Description      string
 }

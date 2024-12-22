@@ -54,34 +54,8 @@ func main() {
 
 	firstDay := time.Date(startYear, time.Month(startMonth), 1, 0, 0, 0, 0, time.UTC)
 	lastDay := time.Date(endYear, time.Month(endMonth), 31, 0, 0, 0, 0, time.UTC)
-	weekDays := []turnify.WorkShift{}
-	for d := firstDay; !d.After(lastDay); d = d.AddDate(0, 0, 1) {
-		wdays := turnify.ConvertDayToDayType(d, specialDays)
-		for _, wday := range wdays {
-			italianDays := []string{
-				"Domenica", // Sunday
-				"Lunedì",   // Monday
-				"Martedì",  // Tuesday
-				"Mercoledì",// Wednesday
-				"Giovedì",  // Thursday
-				"Venerdì",  // Friday
-				"Sabato",   // Saturday
-			}
-			wdayItalian := italianDays[d.Weekday()]
-			wday.Weekday = wdayItalian
-			weekDays = append(weekDays, wday)
-		}
-	}
-	weekMap := map[turnify.WorkType][]turnify.WorkShift{}
-	for _, wday := range weekDays {
-		if _, ok := weekMap[turnify.WorkType(wday.WorkType)]; !ok {
-			weekMap[wday.WorkType] = []turnify.WorkShift{}
-		}
-		weekMap[wday.WorkType] = append(weekMap[wday.WorkType], wday)
-	}
-	// for wtype, wdays := range weekMap {
-	// 	fmt.Printf("%s %d\n", wtype, len(wdays))
-	// }
+	
+	weekDays := turnify.BuildWeekDays(firstDay, lastDay, specialDays)
 	for _, weekDay := range weekDays {
 		fmt.Printf("%s,%s,%s,%s\n", weekDay.Date.Format("02/01/2006"), weekDay.Weekday, weekDay.WorkType, weekDay.Description)
 	}

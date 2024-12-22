@@ -76,3 +76,38 @@ func ConvertDayToDayType(day time.Time, specials []WorkShift) []WorkShift {
 	}
 	return []WorkShift{}
 }
+
+func BuildWeekDays(firstDay time.Time, lastDay time.Time, specialDays []WorkShift) []WorkShift {
+	weekDays := []WorkShift{}
+	for d := firstDay; !d.After(lastDay); d = d.AddDate(0, 0, 1) {
+		wdays := ConvertDayToDayType(d, specialDays)
+		for _, wday := range wdays {
+			italianDays := []string{
+				"Domenica",  // Sunday
+				"Lunedì",    // Monday
+				"Martedì",   // Tuesday
+				"Mercoledì", // Wednesday
+				"Giovedì",   // Thursday
+				"Venerdì",   // Friday
+				"Sabato",    // Saturday
+			}
+			wdayItalian := italianDays[d.Weekday()]
+			wday.Weekday = wdayItalian
+			switch wday.WorkType {
+			case Regular:
+				wday.TeamSize = 2
+			default:
+				wday.TeamSize = 3
+			}
+			weekDays = append(weekDays, wday)
+		}
+	}
+	weekMap := map[WorkType][]WorkShift{}
+	for _, wday := range weekDays {
+		if _, ok := weekMap[WorkType(wday.WorkType)]; !ok {
+			weekMap[wday.WorkType] = []WorkShift{}
+		}
+		weekMap[wday.WorkType] = append(weekMap[wday.WorkType], wday)
+	}
+	return weekDays
+}
