@@ -54,9 +54,14 @@ func main() {
 
 	firstDay := time.Date(startYear, time.Month(startMonth), 1, 0, 0, 0, 0, time.UTC)
 	lastDay := time.Date(endYear, time.Month(endMonth), 31, 0, 0, 0, 0, time.UTC)
-	
+
 	weekDays := turnify.BuildWeekDays(firstDay, lastDay, specialDays)
 	for _, weekDay := range weekDays {
 		fmt.Printf("%s,%s,%s,%s\n", weekDay.Date.Format("02/01/2006"), weekDay.Weekday, weekDay.WorkType, weekDay.Description)
+	}
+
+	workers := turnify.BuildDoctors()
+	for _, woorker := range workers {
+		fmt.Printf("%s\n", woorker.Name)
 	}
 }

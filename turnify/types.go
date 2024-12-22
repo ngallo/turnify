@@ -26,3 +26,9 @@ type WorkShift struct {
 	TeamSize		 int
 	Description      string
 }
+
+// Worker represents a worker.
+type Worker struct {
+	Name string
+	WorkShifts []WorkShift
+}

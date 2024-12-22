@@ -77,6 +77,7 @@ func ConvertDayToDayType(day time.Time, specials []WorkShift) []WorkShift {
 	return []WorkShift{}
 }
 
+// BuildWeekDays builds a slice of WorkShift.
 func BuildWeekDays(firstDay time.Time, lastDay time.Time, specialDays []WorkShift) []WorkShift {
 	weekDays := []WorkShift{}
 	for d := firstDay; !d.After(lastDay); d = d.AddDate(0, 0, 1) {
@@ -110,4 +111,16 @@ func BuildWeekDays(firstDay time.Time, lastDay time.Time, specialDays []WorkShif
 		weekMap[wday.WorkType] = append(weekMap[wday.WorkType], wday)
 	}
 	return weekDays
+}
+
+// BuildDoctors builds a slice of doctors.
+func BuildDoctors() []Worker {
+	workers := make([]Worker, 9)
+	for i := 0; i < 9; i++ {
+		workers[i] = Worker{
+			Name:       fmt.Sprintf("MD%d", i+1),
+			WorkShifts: []WorkShift{},
+		}
+	}
+	return workers
 }
