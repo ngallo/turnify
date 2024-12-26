@@ -50,6 +50,12 @@ func main() {
 		
 		{Date: time.Date(2025, 12, 31, 0, 0, 0, 0, time.UTC), WorkType: turnify.Special, NightShift: false, DayBeforeHoliday: true, Description: "San Silvestro"},
 		{Date: time.Date(2025, 12, 31, 0, 0, 0, 0, time.UTC), WorkType: turnify.SuperSpecial, NightShift: true, DayBeforeHoliday: true, Description: "San Silvestro"},
+
+		{Date: time.Date(2026, 01, 01, 0, 0, 0, 0, time.UTC), WorkType: turnify.SuperSpecial, NightShift: false, DayBeforeHoliday: true, Description: "San Silvestro"},
+		{Date: time.Date(2026, 01, 01, 0, 0, 0, 0, time.UTC), WorkType: turnify.Special, NightShift: true, DayBeforeHoliday: true, Description: "San Silvestro"},
+
+		{Date: time.Date(2026, 01, 06, 0, 0, 0, 0, time.UTC), WorkType: turnify.SuperSpecial, NightShift: false, DayBeforeHoliday: true, Description: "San Silvestro"},
+		{Date: time.Date(2026, 01, 06, 0, 0, 0, 0, time.UTC), WorkType: turnify.Special, NightShift: true, DayBeforeHoliday: true, Description: "San Silvestro"},
 	}
 
 	firstDay := time.Date(startYear, time.Month(startMonth), 1, 0, 0, 0, 0, time.UTC)
@@ -67,37 +73,37 @@ func main() {
 
 	workers := turnify.BuildDoctors()
 
-	err := turnify.AllocateWorkers(workers, weekDaysMap[turnify.SuperSpecial])
+	err := turnify.AllocateWorkers(turnify.SuperSpecial, workers, weekDaysMap[turnify.SuperSpecial])
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	err = turnify.AllocateWorkers(workers, weekDaysMap[turnify.Special])
+	err = turnify.AllocateWorkers(turnify.Special, workers, weekDaysMap[turnify.Special])
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	err = turnify.AllocateWorkers(workers, weekDaysMap[turnify.SuperPreHoliday])
+	err = turnify.AllocateWorkers(turnify.SuperPreHoliday, workers, weekDaysMap[turnify.SuperPreHoliday])
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	err = turnify.AllocateWorkers(workers, weekDaysMap[turnify.PreHoliday])
+	err = turnify.AllocateWorkers(turnify.PreHoliday, workers, weekDaysMap[turnify.PreHoliday])
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	err = turnify.AllocateWorkers(workers, weekDaysMap[turnify.HolidayNight])
+	err = turnify.AllocateWorkers(turnify.HolidayNight, workers, weekDaysMap[turnify.HolidayNight])
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	err = turnify.AllocateWorkers(workers, weekDaysMap[turnify.HolidayDay])
+	err = turnify.AllocateWorkers(turnify.HolidayDay, workers, weekDaysMap[turnify.HolidayDay])
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	err = turnify.AllocateWorkers(workers, weekDaysMap[turnify.Regular])
+	err = turnify.AllocateWorkers(turnify.Regular, workers, weekDaysMap[turnify.Regular])
 	if err != nil {
 		fmt.Println(err)
 		return

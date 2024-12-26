@@ -44,7 +44,7 @@ func WorkerIsAvailable(worker *Worker, shift WorkShift, workerMax int) bool {
 }
 
 // AllocateWorkers allocates workers to shifts.
-func AllocateWorkers(workers []*Worker, shifts []WorkShift) error {
+func AllocateWorkers(wType WorkType, workers []*Worker, shifts []WorkShift) error {
 	availableShifts := []WorkShift{}
 	for _, shift := range shifts {
 		for range make([]struct{}, shift.TeamSize) {
@@ -58,7 +58,7 @@ func AllocateWorkers(workers []*Worker, shifts []WorkShift) error {
 	for _, availableShift := range availableShifts {
 		allocated := false
 		for j := 0; j < workersNum; j++ {
-			worker := workers[queue.Next()]
+			worker := queue.Next(wType, workers)
 			if WorkerIsAvailable(worker, availableShift, maxForWorker) {
 				worker.WorkShifts = append(worker.WorkShifts, availableShift)
 				allocated = true
